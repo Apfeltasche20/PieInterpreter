@@ -1,0 +1,8 @@
+import system
+
+function read(fileName)
+{
+    return intern readFile(fileName);
+}
+
+system.print("Loaded File Module!");

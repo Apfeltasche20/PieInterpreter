@@ -1,0 +1,14 @@
+class window
+{
+    var windowId;
+
+    function window()
+    {
+        windowId = intern windowCreate();
+    }
+
+    function setVisible(value)
+    {
+        intern windowSetVisible(windowId, value);
+    }
+}

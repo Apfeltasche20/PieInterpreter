@@ -1,0 +1,1 @@
+FIX Scope Problem with variables when calling functions in other scopes

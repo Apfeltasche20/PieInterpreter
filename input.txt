@@ -1,0 +1,98 @@
+import system
+
+var testVar;
+var testInt = 4;
+var testString = "Hello World;";
+
+function testFunction()
+{
+
+}
+
+function testFunction2(testArgument)
+{
+
+}
+
+function testFunction3(testArgument, arg2)
+{
+
+}
+
+function testFunction4(testArgument, arg2 = 4)
+{
+    return 420;
+}
+
+function returnValue()
+{
+    return 3;
+}
+
+function testFunction5()
+{
+    testVar = 5;
+    testVar = 60 + 9;
+    testVar = testInt;
+    testVar = (5 + 6) * 4;
+    testVar = (5 + 6) / (1 - 2);
+
+    testVar = returnValue();
+    testVar = testFunction2(2);
+    testVar = testFunction2(60 + 9);
+    testVar = testFunction2((5 + 6) / (1 - 2));
+    testVar = testFunction3(returnValue(4, 2), (returnValue() + 6) / (1 - returnValue()));
+
+    testFunction3(4, 5);
+}
+
+function main(args)
+{
+    system.print("Hello World!");
+    function main()
+    {
+        return 69;
+    }
+    var myObject = system.new myClass(9);
+    var object2 = system.new myClass(4);
+
+    var myBoolean = "Hello World!" + 10;
+    return myObject.classFunction();
+    if(myBoolean)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    };
+    return main();
+}
+
+var functionAsVariable = function f()
+{
+    return 3;
+};
+
+var funnySyntax = function f()
+{
+    return 3;
+};
+
+class myClass
+{
+    var classInteger = 1;
+    var constructorVar = 420;
+
+    function myClass(v)
+    {
+        constructorVar = v;
+    }
+
+    function classFunction()
+    {
+        return constructorVar;
+    }
+}
+
+return main(49);

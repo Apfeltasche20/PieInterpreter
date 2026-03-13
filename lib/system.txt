@@ -1,0 +1,11 @@
+function print(arg)
+{
+    intern print(arg);
+}
+
+function err(arg)
+{
+    intern err(arg);
+}
+
+print("Loaded System Module!");

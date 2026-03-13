@@ -1,0 +1,16 @@
+import system
+import file
+import ui
+
+var array = [4];
+
+array.set(1, 2);
+system.print(array.get(1));
+
+var program = file.read("test.txt");
+system.print("Current Program: ");
+system.print("");
+system.print(program);
+system.print("");
+
+return 0;
