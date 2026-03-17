@@ -1,8 +1,0 @@
-import system
-
-function getCurrentMainFile()
-{
-    return "";
-}
-
-system.print("Loaded Interpreter Module!");

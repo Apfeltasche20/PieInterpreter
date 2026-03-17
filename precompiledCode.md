@@ -139,7 +139,9 @@
 |--------|--------|--------|-----------------|
 | 0      | 4      | UINT32 | 16 (Type)       |
 | 4      | 4      | UINT32 | Has Start Value |
-| 8      | ?      | ACTION | Action          |
+| 8      | 4      | UINT32 | Padding         |
+| 12     | ?      | STRING | Variable Name   |
+| ?      | ?      | ACTION | Action          |
 
 ### Function
 | Offset | Length | Type         | Meaning                    |

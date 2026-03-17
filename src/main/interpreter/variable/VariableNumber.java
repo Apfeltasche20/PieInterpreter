@@ -4,6 +4,18 @@ public class VariableNumber extends Variable
 {
     private long value;
 
+    public VariableNumber(String name, long value)
+    {
+        super(VariableType.NUMBER);
+        this.value = value;
+        this.name = name;
+    }
+
+    public void setValue(long value)
+    {
+        this.value = value;
+    }
+
     public VariableNumber(long value)
     {
         super(VariableType.NUMBER);

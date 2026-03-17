@@ -7,7 +7,7 @@ import main.interpreter.clazz.Clazz;
 import main.interpreter.function.Function;
 import main.interpreter.intern.FunctionCallback;
 import main.interpreter.intern.functions.System;
-import main.interpreter.intern.functions.Window;
+import main.interpreter.intern.functions.ui.UI;
 import main.interpreter.logger.Logger;
 import main.interpreter.scope.Scope;
 import main.interpreter.scope.ScopeEndReason;
@@ -40,8 +40,14 @@ public class Interpreter
 
         this.internFunctions.put("readFile", main.interpreter.intern.functions.File::readFile);
 
-        this.internFunctions.put("windowCreate", Window::windowCreate);
-        this.internFunctions.put("windowSetVisible", Window::windowSetVisible);
+        this.internFunctions.put("windowCreate", UI::windowCreate);
+        this.internFunctions.put("windowSetVisible", UI::windowSetVisible);
+        this.internFunctions.put("windowSetSize", UI::windowSetSize);
+        this.internFunctions.put("windowSetName", UI::windowSetName);
+        this.internFunctions.put("windowSetDrawHandler", UI::windowSetDrawHandler);
+        this.internFunctions.put("windowCenterOnScreen", UI::windowCenterOnScreen);
+
+        this.internFunctions.put("canvasDrawText", UI::canvasDrawText);
 
         this.loadedFiles = new HashMap<>();
         this.includeDirs = includeDirs;
@@ -52,7 +58,7 @@ public class Interpreter
         FunctionCallback internalFunction = internFunctions.get(name);
         if(internalFunction != null)
         {
-            return internalFunction.call(arguments);
+            return internalFunction.call(this, arguments);
         }
         else
         {
@@ -66,6 +72,7 @@ public class Interpreter
         try
         {
             Code code = new Code(Files.readString(Path.of(path + ".txt")));
+            Compiler.saveCode(new File(path + ".bin"), code);
             //loadedFiles.put(path, code);
             return code;
         } catch (IOException e)
@@ -108,11 +115,10 @@ public class Interpreter
     public void executeFile(String name)
     {
         Code code = getCodeFromCacheOrLoad(name);
-        Compiler.saveCode(new File("compiled.bin"), code);
         code.setInitialized(true);
         Logger.debugLog("\n------------------------------------\n");
         Variable returnValue = executeScope(code.getGlobalScope(), ScopeType.FUNCTION);
-        System.print(List.of(new VariableString("Code returned with: "), returnValue));
+        System.print(this, List.of(new VariableString("Code returned with: "), returnValue));
     }
 
     public void execute(String sourceCode)
@@ -121,7 +127,7 @@ public class Interpreter
         code.setInitialized(true);
         Logger.debugLog("\n------------------------------------\n");
         Variable returnValue = executeScope(code.getGlobalScope(), ScopeType.FUNCTION);
-        System.print(List.of(new VariableString("Code returned with: "), returnValue));
+        System.print(this, List.of(new VariableString("Code returned with: "), returnValue));
     }
 
     public Variable executeScope(Scope scope, ScopeType type)

@@ -65,6 +65,8 @@ public class VariableDeclaration extends CodeAction
     {
         saveOutputStream.writeInt(16);
         saveOutputStream.writeInt(value != null ? 1 : 0);
+        saveOutputStream.writeInt(0);
+        saveOutputStream.saveAndWriteString(name);
         if(value != null)
             value.toBinary(saveOutputStream);
     }

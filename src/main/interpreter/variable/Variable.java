@@ -2,6 +2,7 @@ package main.interpreter.variable;
 
 import main.interpreter.Interpreter;
 import main.interpreter.action.CallFunctionAction;
+import main.interpreter.function.Function;
 import main.interpreter.scope.Scope;
 
 public class Variable
@@ -60,5 +61,10 @@ public class Variable
     public long asNumber()
     {
         return 0;
+    }
+
+    public Function asFunction()
+    {
+        return null;
     }
 }

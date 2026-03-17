@@ -2,15 +2,23 @@ import system
 import file
 import ui
 
-var array = [4];
-
-array.set(1, 2);
-system.print(array.get(1));
-
 var program = file.read("test.txt");
 system.print("Current Program: ");
 system.print("");
 system.print(program);
 system.print("");
+
+var drawHandler = function drawHandler(canvas, width, height)
+{
+    system.print("Width: " + width + ", Height: " + height);
+    canvas.drawText("Hello World!", 0, 0);
+};
+
+var window = ui.createWindow();
+window.setVisible(true);
+window.setSize(1000, 600);
+window.setName("My Window");
+window.setDrawHandler(drawHandler);
+window.centerOnScreen();
 
 return 0;

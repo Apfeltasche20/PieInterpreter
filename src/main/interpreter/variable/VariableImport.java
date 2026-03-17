@@ -3,7 +3,7 @@ package main.interpreter.variable;
 import main.interpreter.scope.Scope;
 
 public class VariableImport extends Variable
-{ ;
+{
     private Scope scope;
 
     public VariableImport(String fileName, Scope scope)

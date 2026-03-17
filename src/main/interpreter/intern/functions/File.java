@@ -1,5 +1,6 @@
 package main.interpreter.intern.functions;
 
+import main.interpreter.Interpreter;
 import main.interpreter.variable.Variable;
 import main.interpreter.variable.VariableString;
 
@@ -10,7 +11,7 @@ import java.util.List;
 
 public class File
 {
-    public static Variable readFile(List<Variable> args)
+    public static Variable readFile(Interpreter interpreter, List<Variable> args)
     {
         if(args.isEmpty())
         {

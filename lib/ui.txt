@@ -1,3 +1,23 @@
+function createWindow()
+{
+    return new window();
+}
+
+class canvas
+{
+    var canvasId;
+
+    function canvas(id)
+    {
+        canvasId = id;
+    }
+
+    function drawText(text, x, y)
+    {
+        intern canvasDrawText(canvasId, text, x, y);
+    }
+}
+
 class window
 {
     var windowId;
@@ -10,5 +30,25 @@ class window
     function setVisible(value)
     {
         intern windowSetVisible(windowId, value);
+    }
+
+    function setSize(width, height)
+    {
+        intern windowSetSize(windowId, width, height);
+    }
+
+    function setName(name)
+    {
+        intern windowSetName(windowId, name);
+    }
+
+    function setDrawHandler(drawHandler)
+    {
+        intern windowSetDrawHandler(windowId, drawHandler);
+    }
+
+    function centerOnScreen()
+    {
+        intern windowCenterOnScreen(windowId);
     }
 }

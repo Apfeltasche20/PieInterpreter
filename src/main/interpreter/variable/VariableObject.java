@@ -8,6 +8,14 @@ public class VariableObject extends Variable
     private Scope object;
     private Clazz clazz;
 
+    public VariableObject(String name, Scope object, Clazz clazz)
+    {
+        super(VariableType.OBJECT);
+        this.name = name;
+        this.object = object;
+        this.clazz = clazz;
+    }
+
     public VariableObject(Scope object, Clazz clazz)
     {
         super(VariableType.OBJECT);

@@ -25,4 +25,10 @@ public class VariableFunction extends Variable
     {
         return "Function " + value.getName();
     }
+
+    @Override
+    public Function asFunction()
+    {
+        return value;
+    }
 }
