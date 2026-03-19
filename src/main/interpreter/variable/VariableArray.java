@@ -21,6 +21,16 @@ public class VariableArray extends Variable
             values[i] = new Variable();
     }
 
+    public int getLength()
+    {
+        return length;
+    }
+
+    public Variable[] getValues()
+    {
+        return values;
+    }
+
     @Override
     public Variable executeFunctionOnVariable(Interpreter interpreter, Scope scope, CallFunctionAction callFunctionAction)
     {
@@ -111,5 +121,19 @@ public class VariableArray extends Variable
         }
         builder.append("]");
         return builder.toString();
+    }
+
+    @Override
+    public Variable[] asArray()
+    {
+        return values;
+    }
+
+    public byte[] asByteArray()
+    {
+        byte[] values = new byte[this.values.length];
+        for(int i = 0;i<values.length;i++)
+            values[i] = (byte)(this.values[i].asNumber() & 0xFF);
+        return values;
     }
 }

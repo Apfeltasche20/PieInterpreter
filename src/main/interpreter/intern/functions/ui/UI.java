@@ -4,6 +4,7 @@ import main.interpreter.Interpreter;
 import main.interpreter.intern.ClassStorage;
 import main.interpreter.variable.*;
 
+import java.awt.image.BufferedImage;
 import java.lang.System;
 import java.util.List;
 
@@ -225,6 +226,83 @@ public class UI
         }
 
         ((InternWindow.WindowClass) referencedObject).drawText(windowTextVariable.asString(), (int) windowXVariable.asNumber(), (int) windowYVariable.asNumber());
+        return new Variable();
+    }
+
+    public static Variable canvasDrawBytes(Interpreter interpreter, List<Variable> args)
+    {
+        if(args.size() < 4)
+        {
+            System.err.println("canvasDrawBytes: Not enough arguments given");
+            System.err.println("Usage: canvasDrawBytes(long canvasId, byte[] image, int x, int y)");
+            return new Variable();
+        }
+
+        Variable windowIdVariable = args.get(0);
+        Variable windowTextVariable = args.get(1);
+        Variable windowXVariable = args.get(2);
+        Variable windowYVariable = args.get(3);
+
+        Object referencedObject = ClassStorage.getStoredObject(windowIdVariable.asNumber());
+        if(!(referencedObject instanceof InternWindow.WindowClass))
+        {
+            System.err.println("canvasDrawBytes: Reference was not a Canvas");
+            System.err.println("Usage: canvasDrawBytes(long canvasId, byte[] image, int x, int y)");
+            return new Variable();
+        }
+
+        ((InternWindow.WindowClass) referencedObject).drawImageBytes(windowTextVariable.asByteArray(), (int) windowXVariable.asNumber(), (int) windowYVariable.asNumber());
+        return new Variable();
+    }
+
+    public static Variable canvasDrawImage(Interpreter interpreter, List<Variable> args)
+    {
+        if(args.size() < 6)
+        {
+            System.err.println("canvasDrawImage: Not enough arguments given");
+            System.err.println("Usage: canvasDrawImage(long canvasId, image image, int x, int y, int width, int height)");
+            return new Variable();
+        }
+
+        Variable windowIdVariable = args.get(0);
+        Variable windowImageVariable = args.get(1);
+        Variable windowXVariable = args.get(2);
+        Variable windowYVariable = args.get(3);
+        Variable windowWidthVariable = args.get(4);
+        Variable windowHeightVariable = args.get(5);
+
+        Object referencedObject = ClassStorage.getStoredObject(windowIdVariable.asNumber());
+        if(!(referencedObject instanceof InternWindow.WindowClass))
+        {
+            System.err.println("canvasDrawImage: Reference was not a Canvas");
+            System.err.println("Usage: canvasDrawImage(long canvasId, image image, int x, int y, int width, int height)");
+            return new Variable();
+        }
+
+        if(!(windowImageVariable instanceof VariableObject))
+        {
+            System.err.println("canvasDrawImage: image was not a image");
+            System.err.println("Usage: canvasDrawImage(long canvasId, image image, int x, int y, int width, int height)");
+            return new Variable();
+        }
+
+        Variable imageVariable = ((VariableObject)windowImageVariable).getObject().getVariableByName("imageId");
+        if(imageVariable == null)
+        {
+            System.err.println("canvasDrawImage: image was not a image");
+            System.err.println("Usage: canvasDrawImage(long canvasId, image image, int x, int y, int width, int height)");
+            return new Variable();
+        }
+
+        Object imageObject = ClassStorage.getStoredObject(imageVariable.asNumber());
+        if(!(imageObject instanceof BufferedImage))
+        {
+            System.err.println("canvasDrawImage: Reference was not a Image");
+            System.err.println("Usage: canvasDrawImage(long canvasId, image image, int x, int y, int width, int height)");
+            return new Variable();
+        }
+
+        ((InternWindow.WindowClass) referencedObject).drawImage((BufferedImage) imageObject, (int) windowXVariable.asNumber(), (int) windowYVariable.asNumber(), (int) windowWidthVariable.asNumber(), (int) windowHeightVariable.asNumber());
         return new Variable();
     }
 

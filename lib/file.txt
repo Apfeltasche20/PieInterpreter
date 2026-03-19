@@ -5,4 +5,9 @@ function read(fileName)
     return intern readFile(fileName);
 }
 
+function readRaw(fileName)
+{
+    return intern readFileRaw(fileName);
+}
+
 system.print("Loaded File Module!");

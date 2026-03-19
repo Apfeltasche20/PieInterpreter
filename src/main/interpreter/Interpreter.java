@@ -39,6 +39,8 @@ public class Interpreter
         this.internFunctions.put("err", System::err);
 
         this.internFunctions.put("readFile", main.interpreter.intern.functions.File::readFile);
+        this.internFunctions.put("readFileRaw", main.interpreter.intern.functions.File::readFileRaw);
+        this.internFunctions.put("readImage", main.interpreter.intern.functions.File::readImage);
 
         this.internFunctions.put("windowCreate", UI::windowCreate);
         this.internFunctions.put("windowSetVisible", UI::windowSetVisible);
@@ -48,6 +50,8 @@ public class Interpreter
         this.internFunctions.put("windowCenterOnScreen", UI::windowCenterOnScreen);
 
         this.internFunctions.put("canvasDrawText", UI::canvasDrawText);
+        this.internFunctions.put("canvasDrawBytes", UI::canvasDrawBytes);
+        this.internFunctions.put("canvasDrawImage", UI::canvasDrawImage);
 
         this.loadedFiles = new HashMap<>();
         this.includeDirs = includeDirs;

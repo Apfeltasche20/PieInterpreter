@@ -9,10 +9,15 @@ import main.interpreter.scope.ScopeType;
 import main.interpreter.variable.VariableNumber;
 import main.interpreter.variable.VariableObject;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 
 public class InternWindow
@@ -115,6 +120,27 @@ public class InternWindow
             currentGraphics.setColor(Color.BLACK);
             currentGraphics.drawString(string, x, y + getStringBounds(string, x, y).height);
             //currentGraphics.drawRect(20, 20, 20, 20);
+        }
+
+        public void drawImage(BufferedImage image, int x, int y, int width, int height)
+        {
+            if(width == 0)
+                width = image.getWidth();
+            if(height == 0)
+                height = image.getHeight();
+
+            currentGraphics.drawImage(image, x, y, width, height, null);
+        }
+
+        public void drawImageBytes(byte[] image, int x, int y)
+        {
+            try
+            {
+                currentGraphics.drawImage(ImageIO.read(new ByteArrayInputStream(image)), x, y, null);
+            } catch (IOException e)
+            {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

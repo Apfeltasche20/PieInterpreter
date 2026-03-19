@@ -66,7 +66,7 @@ public class NewClassObjectAction extends CodeAction
         if(constructorFunction != null)
         {
             CallFunctionAction callFunctionAction = new CallFunctionAction(clazz.getClassName(), constructorArguments);
-            callFunctionAction.evaluate(interpreter, newObjectScope);
+            callFunctionAction.evaluateInOtherScope(interpreter, scope, newObjectScope);
         }
 
         return new VariableObject(newObjectScope, clazz);

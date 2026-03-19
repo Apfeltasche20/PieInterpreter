@@ -67,4 +67,14 @@ public class Variable
     {
         return null;
     }
+
+    public Variable[] asArray()
+    {
+        return new Variable[0];
+    }
+
+    public byte[] asByteArray()
+    {
+        return new byte[0];
+    }
 }

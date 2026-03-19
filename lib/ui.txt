@@ -3,6 +3,21 @@ function createWindow()
     return new window();
 }
 
+function createImageFromFile(file)
+{
+    return new image(file);
+}
+
+class image
+{
+    var imageId;
+
+    function image(fileName)
+    {
+        imageId = intern readImage(fileName);
+    }
+}
+
 class canvas
 {
     var canvasId;
@@ -15,6 +30,11 @@ class canvas
     function drawText(text, x, y)
     {
         intern canvasDrawText(canvasId, text, x, y);
+    }
+
+    function drawImage(image, x, y, width, height)
+    {
+        intern canvasDrawImage(canvasId, image, x, y, width, height);
     }
 }
 

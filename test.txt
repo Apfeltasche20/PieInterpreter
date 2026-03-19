@@ -12,7 +12,10 @@ var drawHandler = function drawHandler(canvas, width, height)
 {
     system.print("Width: " + width + ", Height: " + height);
     canvas.drawText("Hello World!", 0, 0);
+    canvas.drawImage(image, 0, 0, width, height);
 };
+
+var image = ui.createImageFromFile("testImage.jpg");
 
 var window = ui.createWindow();
 window.setVisible(true);
