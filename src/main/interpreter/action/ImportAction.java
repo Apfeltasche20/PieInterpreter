@@ -28,7 +28,7 @@ public class ImportAction extends CodeAction
             importedFile.setInitialized(true);
         }
         VariableImport variableImport = new VariableImport(fileName, importedFile.getGlobalScope());
-        scope.addVariable(variableImport);
+        scope.addImportVariable(variableImport);
         return variableImport;
     }
 

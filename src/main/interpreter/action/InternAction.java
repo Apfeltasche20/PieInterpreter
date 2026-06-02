@@ -34,7 +34,7 @@ public class InternAction extends CodeAction
         }
         else
         {
-            System.err.println("Only Function can be called intern!");
+            System.err.println("Only Function calls be intern!");
             return new Variable();
         }
     }

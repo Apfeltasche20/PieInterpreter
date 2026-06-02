@@ -16,6 +16,16 @@ public class VariableObject extends Variable
         this.clazz = clazz;
     }
 
+    public Object getRawValue()
+    {
+        return this;
+    }
+
+    public Class<?> getTypeClass()
+    {
+        return VariableObject.class;
+    }
+
     public VariableObject(Scope object, Clazz clazz)
     {
         super(VariableType.OBJECT);

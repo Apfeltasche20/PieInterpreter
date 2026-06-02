@@ -20,6 +20,8 @@ public class ElseAction extends CodeAction
     @Override
     public Variable evaluate(Interpreter interpreter, Scope scope, ScopeResult result)
     {
+        this.scope.setParent(scope);
+
         ScopeResult innerResult = new ScopeResult();
         Variable returnVariable = interpreter.executeScope(this.scope, ScopeType.CONDITION, innerResult);
         result.reason = innerResult.reason;

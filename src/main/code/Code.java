@@ -100,6 +100,10 @@ public class Code
                 String fileName = codeStream.getNextToken();
                 return new ImportAction(fileName);
             }
+            case "intern_class" -> {
+                CodeStream classCodeStream = codeStream.getCodeStreamUntilOpenAndClosingCurlyBrackets();
+                return parseInternClassDeclaration(classCodeStream);
+            }
             default -> {
                 return parseNonKeywordCodeLine(token, codeStream);
                 //System.err.println("Unexpected token: \"" + token + "\" at");
@@ -159,7 +163,10 @@ public class Code
             else if(currentToken.equals("return"))
             {
                 Logger.debugLog("\tReturn Value");
-                currentLeftAction = new ReturnAction(parseCodeLine(ownCodeStream));
+                CodeAction codeAction = null;
+                if(!ownCodeStream.isFinished())
+                    codeAction = parseCodeLine(ownCodeStream);
+                currentLeftAction = new ReturnAction(codeAction);
             }
             else if(currentToken.equals("run"))
             {
@@ -318,6 +325,59 @@ public class Code
 
         parseCodeStreamIntoScope(codeStream, functionScope);
         return new Clazz(functionName, functionScope);
+    }
+
+    private InternClassAction parseInternClassDeclaration(CodeStream codeStream)
+    {
+        String className = codeStream.getNextToken();
+        String argumentsOpen = codeStream.getNextToken();
+        if(!argumentsOpen.equals("{"))
+        {
+            System.err.println(codeStream.getLine());
+            System.err.println("\tExpected '{' but got " + argumentsOpen);
+            return null;
+        }
+
+        InternClassAction internClass = new InternClassAction(className);
+        ///*
+        while(!codeStream.isFinished())
+        {
+            String currentToken = codeStream.getNextToken();
+            if(currentToken.isBlank())
+                continue;
+
+            if (!currentToken.equals("intern_function"))
+            {
+                System.err.println("Expected intern_function, but got "+currentToken+"!\n");
+                continue;
+            }
+
+            String functionName = codeStream.getNextToken();
+            String argumentOpen = codeStream.getNextToken();
+            if (!argumentOpen.equals("("))
+            {
+                System.err.println("Expected (, but got "+currentToken+"!\n");
+                continue;
+            }
+            String argumentClose = codeStream.getNextToken();
+            if (!argumentClose.equals(")"))
+            {
+                System.err.println("Expected ), but got "+currentToken+"!\n");
+                continue;
+            }
+
+            String endDeclaration = codeStream.getNextToken();
+            if (!endDeclaration.equals(";"))
+            {
+                System.err.println("Expected ;, but got "+currentToken+"!\n");
+                continue;
+            }
+
+            internClass.addInternFunction(new InternFunctionAction(functionName));
+        }
+         //*/
+
+        return internClass;
     }
 
     private Function parseFunctionDeclaration(CodeStream codeStream)

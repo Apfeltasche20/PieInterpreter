@@ -22,4 +22,21 @@ public class System
         java.lang.System.err.println();
         return new Variable();
     }
+
+    public static Variable wait(Interpreter interpreter, List<Variable> args)
+    {
+        if(args.isEmpty())
+        {
+            return new Variable();
+        }
+
+        try
+        {
+            Thread.sleep(args.getFirst().asNumber());
+        } catch (InterruptedException e)
+        {
+            throw new RuntimeException(e);
+        }
+        return new Variable();
+    }
 }

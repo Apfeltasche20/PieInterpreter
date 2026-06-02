@@ -23,6 +23,8 @@ public class IfAction extends CodeAction
     @Override
     public Variable evaluate(Interpreter interpreter, Scope scope, ScopeResult result)
     {
+        this.scope.setParent(scope);
+
         Variable variable = condition.evaluate(interpreter, scope);
         boolean conditionValue = variable.asBoolean();
         ScopeResult innerResult = new ScopeResult();

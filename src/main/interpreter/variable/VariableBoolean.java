@@ -10,6 +10,16 @@ public class VariableBoolean extends Variable
         this.value = value;
     }
 
+    public Object getRawValue()
+    {
+        return value;
+    }
+
+    public Class<?> getTypeClass()
+    {
+        return boolean.class;
+    }
+
     @Override
     public Variable copy()
     {

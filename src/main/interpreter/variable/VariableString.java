@@ -10,6 +10,16 @@ public class VariableString extends Variable
         this.value = value;
     }
 
+    public Object getRawValue()
+    {
+        return value;
+    }
+
+    public Class<?> getTypeClass()
+    {
+        return String.class;
+    }
+
     @Override
     public Variable copy()
     {
@@ -27,6 +37,6 @@ public class VariableString extends Variable
     @Override
     public boolean asBoolean()
     {
-        return false;
+        return !value.isEmpty();
     }
 }

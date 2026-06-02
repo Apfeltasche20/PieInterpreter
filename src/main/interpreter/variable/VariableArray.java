@@ -5,6 +5,8 @@ import main.interpreter.action.CallFunctionAction;
 import main.interpreter.action.CodeAction;
 import main.interpreter.scope.Scope;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.List;
 
 public class VariableArray extends Variable
@@ -19,6 +21,11 @@ public class VariableArray extends Variable
         this.values = new Variable[length];
         for(int i = 0;i<values.length;i++)
             values[i] = new Variable();
+    }
+
+    public Class<?> getTypeClass()
+    {
+        return Array.newInstance(values.getClass().getComponentType(), 0).getClass();
     }
 
     public int getLength()

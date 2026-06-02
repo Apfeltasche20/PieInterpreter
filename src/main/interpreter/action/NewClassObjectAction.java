@@ -7,10 +7,15 @@ import main.interpreter.scope.Scope;
 import main.interpreter.scope.ScopeResult;
 import main.interpreter.scope.ScopeType;
 import main.interpreter.variable.Variable;
+import main.interpreter.variable.VariableJavaObject;
 import main.interpreter.variable.VariableObject;
 import main.util.SaveOutputStream;
 
+import java.lang.reflect.Array;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class NewClassObjectAction extends CodeAction
@@ -58,18 +63,61 @@ public class NewClassObjectAction extends CodeAction
             System.exit(-1);
         }
 
-        Scope newObjectScope = clazz.getClassScope().copy();
-        //newObjectScope.setParent(scope);
-
-        interpreter.executeScope(newObjectScope, ScopeType.FUNCTION);
-        Function constructorFunction = newObjectScope.getFunctionByName(clazz.getClassName());
-        if(constructorFunction != null)
+        if(clazz instanceof InternClassAction)
         {
-            CallFunctionAction callFunctionAction = new CallFunctionAction(clazz.getClassName(), constructorArguments);
-            callFunctionAction.evaluateInOtherScope(interpreter, scope, newObjectScope);
-        }
+            Class<?> internClass = interpreter.getInternClass(clazz.getClassName());
+            if(internClass == null)
+            {
+                System.err.println("Intern Class " + clazz.getClassName() + " not found!");
+                return null;
+            }
 
-        return new VariableObject(newObjectScope, clazz);
+            Class<?>[] types = new Class[constructorArguments.size()];
+            Object[] args = new Object[constructorArguments.size()];
+            for(int i = 0;i<args.length;i++)
+            {
+                args[i] = constructorArguments.get(i).evaluate(interpreter, scope).getRawValue();
+                types[i] = args[i].getClass();
+            }
+
+            try
+            {
+                Constructor<?> constructor = internClass.getConstructor(types);
+                Object javaObject = constructor.newInstance(args);
+                return new VariableJavaObject((InternClassAction) clazz, javaObject);
+            } catch (NoSuchMethodException e)
+            {
+                System.err.println("Could not find Constructor with arguments " + Arrays.toString(types) + " on Intern Class " + clazz.getClassName() + "!");
+                return new Variable();
+            } catch (InvocationTargetException e)
+            {
+                System.err.println("Error invoking Constructor with arguments " + Arrays.toString(types) + " on Intern Class " + clazz.getClassName() + "!");
+                return new Variable();
+            } catch (InstantiationException e)
+            {
+                System.err.println("Error calling Constructor with arguments " + Arrays.toString(types) + " on Intern Class " + clazz.getClassName() + "!");
+                return new Variable();
+            } catch (IllegalAccessException e)
+            {
+                System.err.println("Error accessing Constructor with arguments " + Arrays.toString(types) + " on Intern Class " + clazz.getClassName() + "!");
+                return new Variable();
+            }
+        }
+        else
+        {
+            Scope newObjectScope = clazz.getClassScope().copy();
+            //newObjectScope.setParent(scope);
+
+            interpreter.executeScope(newObjectScope, ScopeType.FUNCTION);
+            Function constructorFunction = newObjectScope.getFunctionByName(clazz.getClassName());
+            if(constructorFunction != null)
+            {
+                CallFunctionAction callFunctionAction = new CallFunctionAction(clazz.getClassName(), constructorArguments);
+                callFunctionAction.evaluateInOtherScope(interpreter, scope, newObjectScope);
+            }
+
+            return new VariableObject(newObjectScope, clazz);
+        }
     }
 
     @Override

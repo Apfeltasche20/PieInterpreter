@@ -2,6 +2,19 @@ import system
 import file
 import ui
 
+intern_class String
+{
+    intern_function String();
+    intern_function append();
+    intern_function toString();
+    intern_function getBytes();
+}
+
+var intern_string = new String("Hello World!");
+intern_string.append("Hah");
+system.print(intern_string.toString());
+intern_string.getBytes();
+
 var program = file.read("test.txt");
 system.print("Current Program: ");
 system.print("");

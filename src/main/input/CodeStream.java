@@ -171,9 +171,20 @@ public class CodeStream
         StringBuilder stringBuilder = new StringBuilder();
         int openBrackets = 0;
         String nextToken = getNextToken();
+        int openNormal = 0;
         while (nextToken != null)
         {
-            if(nextToken.equals("{"))
+            if(nextToken.equals("("))
+            {
+                openNormal++;
+                stringBuilder.append(nextToken).append(" ");
+            }
+            else if(nextToken.equals(")"))
+            {
+                openNormal--;
+                stringBuilder.append(nextToken).append(" ");
+            }
+            else if(nextToken.equals("{"))
             {
                 openBrackets++;
                 stringBuilder.append(nextToken).append(" ");
@@ -181,7 +192,7 @@ public class CodeStream
             else if(nextToken.equals("}"))
             {
                 openBrackets--;
-                if(openBrackets == 0)
+                if((openBrackets == 0) && (openNormal <= 0))
                     return new CodeStream(stringBuilder.toString());
                 else
                     stringBuilder.append(nextToken).append(" ");

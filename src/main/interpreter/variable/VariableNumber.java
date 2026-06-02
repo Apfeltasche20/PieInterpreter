@@ -11,6 +11,16 @@ public class VariableNumber extends Variable
         this.name = name;
     }
 
+    public Object getRawValue()
+    {
+        return value;
+    }
+
+    public Class<?> getTypeClass()
+    {
+        return long.class;
+    }
+
     public void setValue(long value)
     {
         this.value = value;

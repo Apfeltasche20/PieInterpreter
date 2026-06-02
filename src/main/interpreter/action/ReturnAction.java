@@ -20,7 +20,10 @@ public class ReturnAction extends CodeAction
     public Variable evaluate(Interpreter interpreter, Scope scope, ScopeResult result)
     {
         result.reason = ScopeEndReason.RETURN;
-        return returnValue.evaluate(interpreter, scope);
+        if(returnValue != null)
+            return returnValue.evaluate(interpreter, scope);
+        else
+            return new Variable();
     }
 
     @Override

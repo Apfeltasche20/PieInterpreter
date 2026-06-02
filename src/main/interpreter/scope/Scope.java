@@ -1,9 +1,11 @@
 package main.interpreter.scope;
 
 import main.interpreter.action.CodeAction;
+import main.interpreter.action.ImportAction;
 import main.interpreter.clazz.Clazz;
 import main.interpreter.function.Function;
 import main.interpreter.variable.Variable;
+import main.interpreter.variable.VariableImport;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +20,7 @@ public class Scope
     private List<Function> currentFunctionsScope;
     private List<Clazz> currentClasses;
     private Map<String, Variable> currentVariables;
+    private List<VariableImport> currentImports;
 
     public Scope(Scope parent)
     {
@@ -26,6 +29,7 @@ public class Scope
         this.currentFunctionsScope = new ArrayList<>();
         this.currentVariables = new HashMap<>();
         this.currentClasses = new ArrayList<>();
+        this.currentImports = new ArrayList<>();
     }
 
     public Scope()
@@ -71,6 +75,12 @@ public class Scope
     public void addVariable(Variable variable)
     {
         currentVariables.put(variable.getName(), variable);
+    }
+
+    public void addImportVariable(VariableImport variable)
+    {
+        addVariable(variable);
+        currentImports.add(variable);
     }
 
     public void addClass(Clazz clazz)
@@ -127,9 +137,20 @@ public class Scope
                 return currentClasses.get(i);
 
         if(parent != null)
-            return parent.getClassByName(className);
-        else
-            return null;
+        {
+            Clazz parentSearch = parent.getClassByName(className);
+            if(parentSearch != null)
+                return parentSearch;
+        }
+
+        for(int i = 0;i<currentImports.size();i++)
+        {
+            Clazz importSearch = currentImports.get(i).getScope().getClassByName(className);
+            if(importSearch != null)
+                return importSearch;
+        }
+
+        return null;
     }
 
     public Scope getParent()

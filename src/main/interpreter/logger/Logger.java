@@ -9,6 +9,11 @@ public class Logger
         Logger.debugLogging = debugLogging;
     }
 
+    public static boolean isDebugLogging()
+    {
+        return debugLogging;
+    }
+
     public static void debugLog(String string)
     {
         if(debugLogging)
