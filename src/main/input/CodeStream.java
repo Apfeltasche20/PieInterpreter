@@ -215,7 +215,17 @@ public class CodeStream
         int openBrackets = 1;
         while (nextToken != null)
         {
-            if(nextToken.equals("{"))
+            if(nextToken.equals("("))
+            {
+                openBrackets++;
+                stringBuilder.append(nextToken).append(" ");
+            }
+            else if(nextToken.equals(")"))
+            {
+                openBrackets--;
+                stringBuilder.append(nextToken).append(" ");
+            }
+            else if(nextToken.equals("{"))
             {
                 openBrackets++;
                 stringBuilder.append(nextToken).append(" ");

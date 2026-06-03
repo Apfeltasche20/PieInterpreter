@@ -1,15 +1,51 @@
 import main.interpreter.Interpreter;
+import main.interpreter.variable.Variable;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Main
 {
+    public static long loop()
+    {
+        long x = 1;
+        long y = 1;
+        long z = 1;
+
+        long loops = 1000000;
+
+        while(loops > 0)
+        {
+            z = z + x + y;
+            x = x + 1;
+            y = x + 2;
+
+            loops = loops - 1;
+        }
+
+        return z;
+    }
+
     public static void main(String[] args) throws IOException
     {
-        Interpreter interpreter = new Interpreter(new ArrayList<>());
-        interpreter.execute(Files.readString(Path.of("input.pie")));
+        //Interpreter interpreter = new Interpreter(new ArrayList<>());
+        //interpreter.execute(Files.readString(Path.of("input.pie")));
+
+        Interpreter interpreter = new Interpreter(List.of("lib"));
+        long startTime = System.nanoTime();
+        Variable resultVariable = interpreter.executeFile("benchmark");
+        long endTime = System.nanoTime();
+        long result = resultVariable.asNumber();
+        System.out.println(result);
+        System.out.println((endTime - startTime) / 1000 + " micro sec");
+
+        startTime = System.nanoTime();
+        result = loop();
+        endTime = System.nanoTime();
+        System.out.println(result);
+        System.out.println((endTime - startTime) / 1000 + " micro sec");
     }
 }

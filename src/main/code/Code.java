@@ -218,6 +218,50 @@ public class Code
                 parseCodeStreamIntoScope(scopeStream, elseAction.scope);
                 ((IfAction) currentLeftAction).elseAction = elseAction;
             }
+            else if(currentToken.equals("while"))
+            {
+                Logger.debugLog("\tWhile");
+                String openBrackets = ownCodeStream.getNextToken();
+                if(!openBrackets.equals("("))
+                {
+                    System.err.println("Expected ( after while but got " + openBrackets);
+                    return null;
+                }
+                CodeStream condition = ownCodeStream.getCodeStreamUntilClosingBrackets();
+                openBrackets = ownCodeStream.getNextToken();
+                if(!openBrackets.equals("{"))
+                {
+                    System.err.println("Expected { after while but got " + openBrackets);
+                    return null;
+                }
+                CodeStream scopeStream = ownCodeStream.getCodeStreamUntilClosingCurlyBrackets();
+                WhileAction whileAction = new WhileAction(parseCodeLine(condition));
+                parseCodeStreamIntoScope(scopeStream, whileAction.scope);
+                currentLeftAction = whileAction;
+            }
+            else if(currentToken.equals("for"))
+            {
+                Logger.debugLog("\tfor");
+                String openBrackets = ownCodeStream.getNextToken();
+                if(!openBrackets.equals("("))
+                {
+                    System.err.println("Expected ( after for but got " + openBrackets);
+                    return null;
+                }
+                CodeStream loopStart = ownCodeStream.getCodeStreamUntilTopLevelToken(";");
+                CodeStream condition = ownCodeStream.getCodeStreamUntilTopLevelToken(";");
+                CodeStream loopIteration = ownCodeStream.getCodeStreamUntilClosingBrackets();
+                openBrackets = ownCodeStream.getNextToken();
+                if(!openBrackets.equals("{"))
+                {
+                    System.err.println("Expected { after while but got " + openBrackets);
+                    return null;
+                }
+                CodeStream scopeStream = ownCodeStream.getCodeStreamUntilClosingCurlyBrackets();
+                ForAction forAction = new ForAction(parseCodeLine(loopStart), parseCodeLine(condition), parseCodeLine(loopIteration));
+                parseCodeStreamIntoScope(scopeStream, forAction.scope);
+                currentLeftAction = forAction;
+            }
             else if(currentToken.equals("false"))
             {
                 Logger.debugLog("\tFalse");

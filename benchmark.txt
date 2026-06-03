@@ -1,0 +1,19 @@
+import system
+
+function loop()
+{
+    var x = 1;
+    var y = 1;
+    var z = 1;
+
+    for(var i = 0;i < 1000000;i = i + 1)
+    {
+        z = z + x + y;
+        x = x + 1;
+        y = x + 2;
+    };
+
+    return z;
+}
+
+return loop();

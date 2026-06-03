@@ -1,10 +1,7 @@
 package main.interpreter.action;
 
 import main.interpreter.Interpreter;
-import main.interpreter.math.Division;
-import main.interpreter.math.Minus;
-import main.interpreter.math.Multiplication;
-import main.interpreter.math.Plus;
+import main.interpreter.math.*;
 import main.interpreter.scope.Scope;
 import main.interpreter.scope.ScopeEndReason;
 import main.interpreter.scope.ScopeResult;
@@ -46,6 +43,12 @@ public class MathAction extends CodeAction
             }
             case "/" -> {
                 return Division.division(leftVariable, rightVariable);
+            }
+            case ">" -> {
+                return Greater.greater(leftVariable, rightVariable);
+            }
+            case "<" -> {
+                return Smaller.smaller(leftVariable, rightVariable);
             }
             default -> {
                 System.err.println("Unknown Math Symbol: " + mathSymbol);
