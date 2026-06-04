@@ -79,7 +79,148 @@ while(true)
 import system
 ```
 
+### Classes
+```
+class myClass()
+{
+    var myClassVariable = 5;
+    
+    // Constructor is a function with the same name as the class
+    function myClass()
+    {
+        
+    }
+    
+    function myClassFunction()
+    {
+    
+    }
+}
+
+var myObject = new myClass();
+myObject.myClassFunction();
+```
+
+### Arrays
+- Arrays can store values of multiple types
+- Arrays are bound checked on setting or getting a value
+```
+var myArray = [4];
+myArray.set(0, 5); // setting the 0-index to 5
+var value = myArray.get(0); // get the 0-index from the array
+```
+
 ## Java Interop
+### Registering a Function
+On the java side:
+
+```java
+
+import main.interpreter.Interpreter;
+import main.interpreter.variable.Variable;
+import main.interpreter.variable.VariableString;
+import main.interpreter.variable.VariableType;
+
+import java.util.List;
+
+/**
+ *
+ * @param interpreter the interpreter instance that runs the code
+ * @param args the list of variables given to the function
+ * @return return value of the function
+ */
+public static Variable myFunction(Interpreter interpreter, List<Variable> args)
+{
+    Variable firstArgument = args.getFirst();
+    // getting type of the variable
+    VariableType variableType = firstArgument.getCurrentType();
+    // get variable value as a string
+    String firstArgumentValue = firstArgument.asString();
+
+    // returns null
+    return new Variable();
+    // returns "Hello World"
+    return new VariableString("Hello World");
+}
+
+public static void main(String[] args)
+{
+    Interpreter interpreter = new Interpreter();
+    interpreter.addInternFunction("myFunction", (interpreter1, args1) -> myFunction(interpreter, args));
+}
+
+```
+On the Pie-Lang Side:
+```
+function myFunction(arg1)
+{
+    // Calls the function registers as myFunction on the Java Side
+    var returnValue = intern myFunction(arg1);
+}
+```
+
+### Registering a Java Class
+On the java side:
+
+```java
+import main.interpreter.intern.classes.ExposedFunction;
+
+/*
+ * To Use a Java Class in Pie-Lang it needs to be Annotated with the ExposedClass Annotation
+ * arrays can not be used as arguments or return values currently
+ * 
+ * internModule is the file name where the class is defined in Pie-Lang
+ * internName is the name of the class in Pie-Lang
+ */
+@ExposedClass(internModule = "string", internName = "CustomString")
+public class CustomString
+{
+    private String value;
+    
+    // Constructors don't need the @ExposedFunction Annotation
+    public CustomString(String value)
+    {
+        this.value = value;
+    }
+
+    // @ExposedFunction exposed the Function to Pie-Lang
+    // Functions without this Annotation can not be called from Pie-Lang
+    @ExposedFunction
+    public void append(String value)
+    {
+        this.value += value;
+    }
+    
+    // Setting the name attribute changes the name of the function in Pie-Lang
+    @ExposedFunction(name = "toString")
+    public String asString()
+    {
+        return value;
+    }
+}
+```
+
+On the Pie-Lang side:
+- return types or arguments are not defined for the intern_classes
+- When calling the functions the runtime checks if the given arguments match the real function arguments
+
+```
+string.txt
+------------------------------------------------
+intern_class CustomString
+{
+    intern_function CustomString(); 
+    intern_function append();
+    intern_function toString();
+}
+```
+
+main.txt
+```
+var myString = new CustomString("Hello ");
+myString.append("World!");
+var result = myString.toString();
+```
 
 ### Future Features
 - [ ] Support for Comments

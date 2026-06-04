@@ -5,6 +5,7 @@ import main.interpreter.variable.VariableString;
 
 import java.nio.charset.StandardCharsets;
 
+@ExposedClass(internModule = "test", internName = "String")
 public class InternString
 {
     private String value;

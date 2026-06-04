@@ -59,7 +59,7 @@ public class Interpreter
         this.internFunctions.put("canvasDrawBytes", UI::canvasDrawBytes);
         this.internFunctions.put("canvasDrawImage", UI::canvasDrawImage);
 
-        this.internClasses.put("String", InternString.class);
+        addInternClass(InternString.class);
 
         this.loadedFiles = new HashMap<>();
         this.includeDirs = includeDirs;

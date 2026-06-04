@@ -10,6 +10,9 @@ intern_class String
     intern_function getBytes();
 }
 
+var array = [4];
+array.set(4, 1);
+
 var intern_string = new String("Hello World!");
 intern_string.append("Hah");
 system.print(intern_string.toString());

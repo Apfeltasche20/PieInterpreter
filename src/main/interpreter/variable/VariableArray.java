@@ -61,7 +61,7 @@ public class VariableArray extends Variable
                 }
 
                 int arrayIndex = Math.toIntExact(index.asNumber());
-                if((arrayIndex < 0) || (arrayIndex > length))
+                if((arrayIndex < 0) || (arrayIndex >= length))
                 {
                     System.err.println("<array>.set(): Index out of bounds. " + arrayIndex + " for size " + length);
                     System.err.println("Usage: <array>.set(index, value)");
