@@ -219,6 +219,8 @@ intern_class CustomString
 ```
 main.txt
 ------------------------------------------------
+import string
+
 var myString = new CustomString("Hello ");
 myString.append("World!");
 var result = myString.toString();
