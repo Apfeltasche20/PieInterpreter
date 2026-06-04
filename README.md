@@ -215,8 +215,10 @@ intern_class CustomString
 }
 ```
 
-main.txt
+
 ```
+main.txt
+------------------------------------------------
 var myString = new CustomString("Hello ");
 myString.append("World!");
 var result = myString.toString();
