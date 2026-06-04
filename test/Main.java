@@ -1,4 +1,6 @@
+import main.code.Code;
 import main.interpreter.Interpreter;
+import main.interpreter.scope.ScopeType;
 import main.interpreter.variable.Variable;
 
 import java.io.IOException;
@@ -35,8 +37,13 @@ public class Main
         //interpreter.execute(Files.readString(Path.of("input.pie")));
 
         Interpreter interpreter = new Interpreter(List.of("lib"));
+        Code code = new Code(Files.readString(Path.of("benchmark.txt")));
+        code.setInitialized(true);
+                //Variable resultVariable = interpreter.executeFile();
         long startTime = System.nanoTime();
-        Variable resultVariable = interpreter.executeFile("benchmark");
+
+        Variable resultVariable = interpreter.executeScope(code.getGlobalScope(), ScopeType.FUNCTION);
+
         long endTime = System.nanoTime();
         long result = resultVariable.asNumber();
         System.out.println(result);

@@ -241,7 +241,7 @@ public class Code
             }
             else if(currentToken.equals("for"))
             {
-                Logger.debugLog("\tfor");
+                Logger.debugLog("\tFor");
                 String openBrackets = ownCodeStream.getNextToken();
                 if(!openBrackets.equals("("))
                 {
