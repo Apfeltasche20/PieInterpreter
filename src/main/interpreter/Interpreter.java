@@ -144,7 +144,7 @@ public class Interpreter
     {
         try
         {
-            String suffix = path.contains(".") ? "" : ".txt";
+            String suffix = path.contains(".") ? "" : ".pie";
 
             Code code = new Code(Files.readString(Path.of(path + suffix)));
             //Compiler.saveCode(new File(path + ".bin"), code);
@@ -158,7 +158,7 @@ public class Interpreter
 
     private Code locateAndLoadFile(String name)
     {
-        String suffix = name.contains(".") ? "" : ".txt";
+        String suffix = name.contains(".") ? "" : ".pie";
 
         File file = new File(name + suffix);
         if(file.exists())

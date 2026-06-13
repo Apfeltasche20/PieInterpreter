@@ -205,7 +205,7 @@ On the Pie-Lang side:
 - When calling the functions the runtime checks if the given arguments match the real function arguments
 
 ```
-string.txt
+string.pie
 ------------------------------------------------
 intern_class CustomString
 {
@@ -217,7 +217,7 @@ intern_class CustomString
 
 
 ```
-main.txt
+main.pie
 ------------------------------------------------
 import string
 
