@@ -27,7 +27,7 @@ public class Util
     {
         return switch (string)
         {
-            case "+", "-", "*", "/", ">", "<", ">=", "<=", "==" -> true;
+            case "+", "-", "*", "/", ">", "<", "~" -> true;
             default -> false;
         };
     }

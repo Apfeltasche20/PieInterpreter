@@ -29,7 +29,11 @@ public class VariableJavaObject extends Variable
         return object;
     }
 
-
+    @Override
+    public Class<?> getTypeClass()
+    {
+        return object.getClass();
+    }
 
     @Override
     public Variable executeFunctionOnVariable(Interpreter interpreter, Scope scope, CallFunctionAction callFunctionAction)
@@ -75,23 +79,29 @@ public class VariableJavaObject extends Variable
         }
 
         Class<?>[] shouldParameterClasses = methodToCall.getParameterTypes();
+        Variable[] variables = new Variable[callFunctionAction.arguments.size()];
         Object[] args = new Object[callFunctionAction.arguments.size()];
         Class<?>[] isParameterClasses = new Class[args.length];
 
         for(int i = 0;i<args.length;i++)
         {
-            args[i] = callFunctionAction.arguments.get(i).evaluate(interpreter, scope).getRawValue();
-            isParameterClasses[i] = args[i].getClass();
+            variables[i] = callFunctionAction.arguments.get(i).evaluate(interpreter, scope);
+            args[i] = variables[i].getRawValue();
+            isParameterClasses[i] = variables[i].getTypeClass();
         }
 
         boolean signatureIsCorrect = shouldParameterClasses.length == isParameterClasses.length;
         if(signatureIsCorrect)
+        {
             for(int i = 0;i<shouldParameterClasses.length;i++)
+            {
                 if (!shouldParameterClasses[i].isAssignableFrom(isParameterClasses[i]))
                 {
                     signatureIsCorrect = false;
                     break;
                 }
+            }
+        }
         if(!signatureIsCorrect)
         {
             System.err.println("Function "+callFunctionAction.functionName+" on Internal Class "+internClass.getClassName()+" not called with right Arguments");

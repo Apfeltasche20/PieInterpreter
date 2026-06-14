@@ -50,6 +50,9 @@ public class MathAction extends CodeAction
             case "<" -> {
                 return Smaller.smaller(leftVariable, rightVariable);
             }
+            case "~" -> {
+                return Equals.equals(leftVariable, rightVariable);
+            }
             default -> {
                 System.err.println("Unknown Math Symbol: " + mathSymbol);
                 System.exit(-1);
