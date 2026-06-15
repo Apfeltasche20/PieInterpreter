@@ -100,6 +100,10 @@ public class Variable
             {
                 return new VariableNumber(l);
             }
+            case Integer i ->
+            {
+                return new VariableNumber(i);
+            }
             case String string ->
             {
                 return new VariableString(string);
