@@ -3,6 +3,7 @@ package main.interpreter.action;
 import main.interpreter.Interpreter;
 import main.interpreter.clazz.Clazz;
 import main.interpreter.function.Function;
+import main.interpreter.intern.classes.ExposedFunction;
 import main.interpreter.scope.Scope;
 import main.interpreter.scope.ScopeResult;
 import main.interpreter.scope.ScopeType;
@@ -72,17 +73,24 @@ public class NewClassObjectAction extends CodeAction
                 return null;
             }
 
+            Variable[] variables = new Variable[constructorArguments.size()];
             Class<?>[] types = new Class[constructorArguments.size()];
             Object[] args = new Object[constructorArguments.size()];
             for(int i = 0;i<args.length;i++)
             {
-                args[i] = constructorArguments.get(i).evaluate(interpreter, scope).getRawValue();
-                types[i] = args[i].getClass();
+                variables[i] = constructorArguments.get(i).evaluate(interpreter, scope);
+                args[i] = variables[i].getRawValue();
+                types[i] = variables[i].getTypeClass();
             }
 
             try
             {
                 Constructor<?> constructor = internClass.getConstructor(types);
+                if(!constructor.isAnnotationPresent(ExposedFunction.class))
+                {
+                    System.err.println("Constructor on Class " + clazz.getClassName() + " with arguments " + Arrays.toString(types) + " is not accessible!");
+                    return new Variable();
+                }
                 Object javaObject = constructor.newInstance(args);
                 return new VariableJavaObject((InternClassAction) clazz, javaObject);
             } catch (NoSuchMethodException e)
