@@ -81,7 +81,7 @@ import system
 
 ### Classes
 ```
-class myClass()
+class myClass
 {
     var myClassVariable = 5;
     
@@ -177,7 +177,7 @@ public class CustomString
 {
     private String value;
     
-    // Constructors don't need the @ExposedFunction Annotation
+    @ExposedFunction
     public CustomString(String value)
     {
         this.value = value;

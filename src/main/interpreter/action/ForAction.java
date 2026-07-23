@@ -1,5 +1,6 @@
 package main.interpreter.action;
 
+import main.code.Compiler;
 import main.interpreter.Interpreter;
 import main.interpreter.scope.Scope;
 import main.interpreter.scope.ScopeResult;
@@ -57,10 +58,11 @@ public class ForAction extends CodeAction
     @Override
     public void toBinary(SaveOutputStream saveOutputStream)
     {
-        //saveOutputStream.writeInt(6);
-        //saveOutputStream.writeInt(0);
-        //condition.toBinary(saveOutputStream);
-        //elseAction.toBinary(saveOutputStream);
-        //Compiler.saveScope(saveOutputStream, scope);
+        saveOutputStream.writeInt(20);
+        saveOutputStream.writeInt(0);
+        loopStart.toBinary(saveOutputStream);
+        condition.toBinary(saveOutputStream);
+        loopIteration.toBinary(saveOutputStream);
+        Compiler.saveScope(saveOutputStream, scope);
     }
 }

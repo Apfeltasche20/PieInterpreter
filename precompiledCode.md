@@ -167,3 +167,13 @@
 | 0      | 4      | UINT32 | 19 (Type) |
 | 4      | 4      | UINT32 | Reserved  |
 | 8      | ?      | ACTION | Action    |
+
+### For Action
+| Offset | Length | Type   | Meaning        |
+|--------|--------|--------|----------------|
+| 0      | 4      | UINT32 | 20 (Type)      |
+| 4      | 4      | UINT32 | Reserved       |
+| 8      | ?      | ACTION | Loop Start     |
+| ?      | ?      | ACTION | Condition      |
+| ?      | ?      | ACTION | Loop Iteration |
+| ?      | ?      | SCOPE  | Scope          |

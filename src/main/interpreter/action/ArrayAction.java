@@ -48,4 +48,9 @@ public class ArrayAction extends CodeAction
         saveOutputStream.writeInt(0);
         length.toBinary(saveOutputStream);
     }
+
+    public CodeAction getLength()
+    {
+        return length;
+    }
 }

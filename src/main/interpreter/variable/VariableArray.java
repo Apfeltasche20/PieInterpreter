@@ -99,6 +99,9 @@ public class VariableArray extends Variable
 
                 return values[arrayIndex];
             }
+            case "size", "length" -> {
+                return new VariableNumber(length);
+            }
             default -> {
                 System.err.println("Function " + callFunctionAction.functionName + " not supported on Array!");
                 return new Variable();

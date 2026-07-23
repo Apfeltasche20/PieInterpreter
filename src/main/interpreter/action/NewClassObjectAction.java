@@ -100,6 +100,7 @@ public class NewClassObjectAction extends CodeAction
             } catch (InvocationTargetException e)
             {
                 System.err.println("Error invoking Constructor with arguments " + Arrays.toString(types) + " on Intern Class " + clazz.getClassName() + "!");
+                e.printStackTrace();
                 return new Variable();
             } catch (InstantiationException e)
             {
@@ -146,5 +147,15 @@ public class NewClassObjectAction extends CodeAction
         saveOutputStream.writeInt(constructorArguments.size());
         for(int i = 0;i<constructorArguments.size();i++)
             constructorArguments.get(i).toBinary(saveOutputStream);
+    }
+
+    public String getClassName()
+    {
+        return className;
+    }
+
+    public List<CodeAction> getConstructorArguments()
+    {
+        return constructorArguments;
     }
 }

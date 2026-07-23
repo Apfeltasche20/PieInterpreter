@@ -124,6 +124,7 @@ public class VariableJavaObject extends Variable
         } catch (InvocationTargetException e)
         {
             System.err.println("Error invoking Function "+callFunctionAction.functionName+" with arguments on Intern Class " + internClass.getClassName() + "!");
+            e.getCause().printStackTrace();
             return new Variable();
         }
     }

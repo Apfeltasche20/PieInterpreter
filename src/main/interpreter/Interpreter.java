@@ -147,7 +147,7 @@ public class Interpreter
             String suffix = path.contains(".") ? "" : ".pie";
 
             Code code = new Code(Files.readString(Path.of(path + suffix)));
-            //Compiler.saveCode(new File(path + ".bin"), code);
+            Compiler.saveCode(new File(path + ".bin"), code);
             //loadedFiles.put(path, code);
             return code;
         } catch (IOException e)

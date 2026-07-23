@@ -10,6 +10,7 @@ public class InternString
 {
     private String value;
 
+    @ExposedFunction
     public InternString(String value)
     {
         this.value = value;

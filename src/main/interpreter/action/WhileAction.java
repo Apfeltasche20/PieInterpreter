@@ -50,6 +50,7 @@ public class WhileAction extends CodeAction
     @Override
     public void toBinary(SaveOutputStream saveOutputStream)
     {
+        System.out.println("WARNING While action to Binary not implemented!");
         //saveOutputStream.writeInt(6);
         //saveOutputStream.writeInt(0);
         //condition.toBinary(saveOutputStream);

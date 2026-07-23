@@ -57,44 +57,65 @@ public class DataStream
 
         StringBuilder output = new StringBuilder();
         boolean inQuotes = false;
+        boolean escaped = false;
         while(pointer < data.length())
         {
             char c = data.charAt(pointer++);
-            switch (c)
+            if(escaped)
             {
-                case '(', ')', ',', '=', '+', '-', '*', '/', ';', '.', '[', ']' -> {
-                    if(output.isEmpty())
+                //System.out.println("Escape Character " + c);
+                output.append("\\");
+                output.append(c);
+
+                escaped = false;
+            }
+            else
+            {
+                switch (c)
+                {
+                    case '(', ')', ',', '=', '+', '-', '*', '/', ';', '.', '[', ']' ->
                     {
-                        output.append(c);
-                        return output.toString().trim();
-                    }
-                    else
-                    {
-                        if(!inQuotes)
-                        {
-                            pointer--;
-                            return output.toString().trim();
-                        }
-                        else
+                        if (output.isEmpty())
                         {
                             output.append(c);
+                            return output.toString().trim();
+                        } else
+                        {
+                            if (!inQuotes)
+                            {
+                                pointer--;
+                                return output.toString().trim();
+                            } else
+                            {
+                                output.append(c);
+                            }
                         }
                     }
-                }
-                case ' ' -> {
-                    if(output.isEmpty())
-                        continue;
-                    if(!inQuotes)
-                        return output.toString().trim();
-                    else
+                    case ' ' ->
+                    {
+                        if (output.isEmpty())
+                            continue;
+                        if (!inQuotes)
+                            return output.toString().trim();
+                        else
+                            output.append(c);
+                    }
+                    case '\\' ->
+                    {
+                        if(inQuotes)
+                            escaped = true;
+                        else
+                            output.append(c);
+                    }
+                    case '"' ->
+                    {
                         output.append(c);
-                }
-                case '"' -> {
-                    output.append(c);
-                    inQuotes = !inQuotes;
-                }
-                default -> {
-                    output.append(c);
+                        inQuotes = !inQuotes;
+                    }
+                    default ->
+                    {
+                        output.append(c);
+                    }
                 }
             }
         }
@@ -105,6 +126,12 @@ public class DataStream
     {
         int startPointer = pointer;
 
+        String token = getNextToken();
+
+        pointer = startPointer;
+
+        return token;
+        /*
         if(pointer >= data.length())
             return null;
 
@@ -158,5 +185,6 @@ public class DataStream
         }
         pointer = startPointer;
         return output.toString().trim();
+         */
     }
 }

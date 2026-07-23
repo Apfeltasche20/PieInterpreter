@@ -1,0 +1,3 @@
+import system
+
+system.print("Hello World!");

@@ -72,7 +72,7 @@ public class MathAction extends CodeAction
     public void toBinary(SaveOutputStream saveOutputStream)
     {
         saveOutputStream.writeInt(9);
-        saveOutputStream.writeStringZeroPadding(mathSymbol, 4);
+        saveOutputStream.saveAndWriteString(mathSymbol);
         left.toBinary(saveOutputStream);
         right.toBinary(saveOutputStream);
     }

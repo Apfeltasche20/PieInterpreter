@@ -14,7 +14,7 @@ public class StringAction extends CodeAction
 
     public StringAction(String string)
     {
-        this.string = string;
+        this.string = string.replace("\\\"", "\"").replace("\\n", "\n").replace("\\\\", "\\");
     }
 
     @Override

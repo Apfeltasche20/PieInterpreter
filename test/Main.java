@@ -1,8 +1,11 @@
+import main.analysis.StaticAnalysis;
 import main.code.Code;
+import main.crosscompiler.java.JavaCrossCompiler;
 import main.interpreter.Interpreter;
 import main.interpreter.scope.ScopeType;
 import main.interpreter.variable.Variable;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -33,9 +36,17 @@ public class Main
 
     public static void main(String[] args) throws IOException
     {
-        //Interpreter interpreter = new Interpreter(new ArrayList<>());
+        Interpreter interpreter = new Interpreter(List.of("lib"));
+        interpreter.executeFile("benchmark");
         //interpreter.execute(Files.readString(Path.of("input.pie")));
 
+        //Interpreter interpreter = new Interpreter(List.of("lib"));
+        //Code code = new Code(Files.readString(Path.of("input.pie")));
+
+        //JavaCrossCompiler.crossCompile(code, System.out);
+        //StaticAnalysis staticAnalysis = new StaticAnalysis(code);
+
+        /*
         Interpreter interpreter = new Interpreter(List.of("lib"));
         Code code = new Code(Files.readString(Path.of("benchmark.txt")));
         code.setInitialized(true);
@@ -54,5 +65,6 @@ public class Main
         endTime = System.nanoTime();
         System.out.println(result);
         System.out.println((endTime - startTime) / 1000 + " micro sec");
+         */
     }
 }

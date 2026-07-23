@@ -48,7 +48,7 @@ function testFunction5()
 
 function main(args)
 {
-    system.print("Hello World!");
+    system.print("\"Hello World!");
     function main()
     {
         return 69;

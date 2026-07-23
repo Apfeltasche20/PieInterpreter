@@ -44,4 +44,9 @@ public class ImportAction extends CodeAction
         saveOutputStream.writeInt(7);
         saveOutputStream.saveAndWriteString(fileName);
     }
+
+    public String getFileName()
+    {
+        return fileName;
+    }
 }
